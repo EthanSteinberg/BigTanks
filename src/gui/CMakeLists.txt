@@ -1,0 +1,13 @@
+set(HDRS
+   tanksGui.h
+   )
+
+set(SRCS
+   tanksGui.cpp
+   )
+
+add_library(TanksGui ${HDRS} ${SRCS})
+target_link_libraries(TanksGui util ${GTK2_LIBRARIES})
+
+
+
