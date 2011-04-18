@@ -4,6 +4,7 @@ set(HDRS
 
 set(SRCS
    tanksMid.cpp
+   processMessage.cpp
    )
 
 add_library(TanksMid ${HDRS} ${SRCS})

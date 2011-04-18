@@ -24,7 +24,7 @@ int t_myQueue::getWaitFd() const
    return dup(fds[0]);
 }
 
-void t_myQueue::push(const t_message &a_message)
+void t_myQueue::push(const t_message& a_message)
 {
    write(fds[1],&a_message,sizeof(a_message));
 }
@@ -32,11 +32,8 @@ void t_myQueue::push(const t_message &a_message)
 t_message t_myQueue::pop()
 {
    t_message the_message;
-
-   if (read(fds[0],&the_message,sizeof(the_message)) == 0)
-   {
+   if(read(fds[0],&the_message,sizeof(the_message)) == 0)
       the_message.id = t_message::closed;
-   }
 
    return the_message;
 }

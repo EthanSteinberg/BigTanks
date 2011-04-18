@@ -3,14 +3,21 @@
 
 #include <boost/utility.hpp>
 
+
+#include "shared.h"
+
 class t_tanksMid : boost::noncopyable
 {
 public:
-   t_tanksMid();
+   t_tanksMid(t_sharedData theSharedData);
    ~t_tanksMid();
 
-private:
+   void run();
 
+private:
+   bool processMessage(const t_message &message);
+
+   t_sharedData sharedData;
 
 };
 

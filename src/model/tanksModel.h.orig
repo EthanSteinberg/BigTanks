@@ -5,11 +5,11 @@
 
 class t_tanksModel : boost::noncopyable
 {
-public:
-   t_tanksModel();
-   ~t_tanksModel();
+   public:
+      t_tanksModel();
+      ~t_tanksModel();
 
-private:
+   private:
 };
 
 #endif

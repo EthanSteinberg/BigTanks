@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <iostream>
 #include <gtkmm.h>
 
 #include <unistd.h>
@@ -6,103 +7,70 @@
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
-#include <myQueue.h>
+#include "shared.h"
 
-void butPush(Gtk::Dialog *dio)
+#include "mid/tanksMid.h"
+#include "gui/tanksGui.h"
+
+void *startMid(void *ptr)
 {
-   dio->run();
-}
+   try
+   {
+      t_sharedData *sharedData = reinterpret_cast<t_sharedData *>(ptr);
 
-void *wrap_func(void *the_func)
-{
-   boost::function<void ()> *func = reinterpret_cast<boost::function<void ()> * >(the_func);
+      t_tanksMid mid(*sharedData);
 
-   (*func)();
-   delete func;
+      sharedData->guiQueue.closeRead();
+      sharedData->guiQueue.closeWrite();
+      sharedData->midQueue.closeRead();
+      sharedData->midQueue.closeWrite();
+
+      mid.run();
+   }
+
+   catch (std::exception &e)
+   {
+      std::cout<<e.what()<<std::endl;
+   }
 
    return NULL;
 }
 
-void start_func(t_myQueue que)
-{
-   printf("The thread was created\n");
-
-   que.closeRead();
-
-   t_message newMes = t_message(std::string("Hello world better version"));
-
-   que.push(newMes);
-}
-
-bool readIt(Glib::IOCondition cond, Gtk::Dialog *dio, t_myQueue &que)
-{
-   if (cond & Glib::IO_IN)
-   {
-      t_message blah = que.pop();
-
-      if (blah.id == t_message::string)
-      {
-         char *str = reinterpret_cast<char *>(blah.data);
-         printf("The thing was called %s\n",str);
-      }
-
-      else
-      {
-         printf("WTF, wront id\n");
-         char *str = reinterpret_cast<char *>(blah.data);
-         printf("The thing was called %s\n",str);
-      }
-
-      dio->show();
-   }
-
-   if (cond & Glib::IO_HUP)
-   {
-      printf("Wow a loss of connection\n");
-
-      return false;
-   }
-
-   if (!(cond & (Glib::IO_HUP | Glib::IO_IN)))
-   {
-      printf("Something else entirely\n");
-   }
-
-
-   return true;
-}
-
 int main(int argv, char **argc)
 {
-   Gtk::Main main(argv,argc);
-   Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file("../res/layout.glade");
-
-
-   Gtk::Window *wind;
-   builder->get_widget("MainWindow",wind);
-
-   Gtk::Button *but;
-   builder->get_widget("button1",but);
-
-   Gtk::Dialog *dio;
-   builder->get_widget("aboutdialog1",dio);
-
-   but->signal_clicked().connect(sigc::bind(sigc::ptr_fun(butPush),dio));
-
-   t_myQueue que;
-
-
-   pthread_t thread;
-
-   if (pthread_create(&thread,NULL,wrap_func,new boost::function<void ()>(boost::bind(start_func,que))))
+   try
    {
-      perror("pthread_create: ");
+      Gtk::Main main(argv,argc);
+
+      pthread_t midThread;
+
+      t_sharedData sharedData;
+
+      {
+         t_tanksGui gui(sharedData);
+
+
+         if (pthread_create(&midThread,NULL,startMid,&sharedData))
+         {
+            perror("pthread_create problem");
+            exit(-1);
+         }
+
+
+         gui.run();
+      }
+
+      if (pthread_join(midThread,NULL))
+      {
+         perror("pthread_join problem");
+         exit(-2);
+      }
    }
 
-   que.closeWrite();
-
-   Glib::signal_io().connect(sigc::bind(sigc::ptr_fun(readIt),dio,que),que.getWaitFd(),Glib::IO_IN | Glib::IO_HUP);
-   main.run(*wind);
+   catch (std::exception &e)
+   {
+      std::cout<<e.what()<<std::endl;
+   }
 
    printf("Hello world\n");
    return 0;

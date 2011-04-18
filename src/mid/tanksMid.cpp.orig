@@ -17,9 +17,8 @@ void t_tanksMid::run()
    sleep(2);
    t_message mess2("Hello world again peeps");
    sharedData.guiQueue.push(mess2);
-
+   
    bool status = true;
-
    while (status)
    {
       t_message aMess = sharedData.midQueue.pop();

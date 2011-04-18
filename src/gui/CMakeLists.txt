@@ -4,6 +4,7 @@ set(HDRS
 
 set(SRCS
    tanksGui.cpp
+   onMessage.cpp
    )
 
 add_library(TanksGui ${HDRS} ${SRCS})

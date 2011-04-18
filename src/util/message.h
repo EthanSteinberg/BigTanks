@@ -7,9 +7,10 @@
 struct t_message
 {
 public:
-   enum 
+   enum
    {
       none = 0,
+      closed,
       string
    };
 
@@ -24,10 +25,10 @@ public:
    }
 
    t_message(const std::string &object ,char ident = string);
-      
    t_message(char ident = none);
-
    ~t_message();
+
+   void close();
 
 private:
 
@@ -35,7 +36,7 @@ private:
    void createIt(const myType &object, char ident, std::true_type)
    {
       id = ident;
-      
+
       data = new char[sizeof(object)];
       memcpy(data,&object,sizeof(object));
    }

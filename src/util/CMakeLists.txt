@@ -1,6 +1,7 @@
 set(HDRS
    myQueue.h
    message.h
+   shared.h
    )
 
 set(SRCS

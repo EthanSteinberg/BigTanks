@@ -29,7 +29,6 @@ void t_tanksGui::run()
 bool t_tanksGui::onIO(Glib::IOCondition cond)
 {
    bool state = true;
-
    if (cond & Glib::IO_IN)
    {
       t_message mess = sharedData.guiQueue.pop();
