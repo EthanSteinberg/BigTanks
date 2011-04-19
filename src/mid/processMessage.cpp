@@ -7,9 +7,10 @@ bool t_tanksMid::processMessage(const t_message &mess)
    case t_message::string:
    {
       printf("Mid has recieved a string\n");
-      printf("%s\n",mess.data);
+      const char *text = static_cast<const char *>(mess.data);
+      printf("%s\n",text);
+      break;
    }
-   break;
 
    case t_message::closed:
    {

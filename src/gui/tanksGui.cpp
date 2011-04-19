@@ -35,7 +35,6 @@ bool t_tanksGui::onIO(Glib::IOCondition cond)
       t_message mess = sharedData.guiQueue.pop();
 
       state = onMessage(mess);
-      mess.close();
    }
 
    if (cond & Glib::IO_HUP)
@@ -49,6 +48,6 @@ bool t_tanksGui::onIO(Glib::IOCondition cond)
 
 void t_tanksGui::onButton()
 {
-   t_message text("And I can talk back too...");
+   t_message text(t_message::string,"And I can talk back too...");
    sharedData.midQueue.push(text);
 }

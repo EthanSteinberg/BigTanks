@@ -1,45 +1,24 @@
 #ifndef MESSAGE_H_INCLUDED
 #define MESSAGE_H_INCLUDED
 
-#include <string>
-#include <cstring>
+#include <cstddef>
 
 struct t_message
 {
 public:
-   enum
+   enum type
    {
       none = 0,
       closed,
       string
    };
 
-   unsigned char id;
-   char *data;
+   type id;
+   const void *data;
 
-   template <class myType>
-   t_message(const myType &object, char ident)
-   {
-      printf("Creating it\n");
-      createIt(object,ident,std::is_pod<myType>());
-   }
-
-   t_message(const std::string &object ,char ident = string);
-   t_message(char ident = none);
-   ~t_message();
-
-   void close();
+   t_message(type ident = none, const void * dat = NULL);
 
 private:
-
-   template <class myType>
-   void createIt(const myType &object, char ident, std::true_type)
-   {
-      id = ident;
-
-      data = new char[sizeof(object)];
-      memcpy(data,&object,sizeof(object));
-   }
 
 };
 
