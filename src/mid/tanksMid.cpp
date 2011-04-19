@@ -11,11 +11,11 @@ t_tanksMid::~t_tanksMid()
 
 void t_tanksMid::run()
 {
-   t_message mess(t_message::string,"Hello world peeps");
+   t_message mess(t_message::string,new std::string("Hello world peeps"));
    sharedData.guiQueue.push(mess);
 
    sleep(2);
-   t_message mess2(t_message::string,"Hello world again peeps");
+   t_message mess2(t_message::string,new std::string("Hello world again peeps"));
    sharedData.guiQueue.push(mess2);
 
    bool status = true;

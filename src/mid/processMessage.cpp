@@ -1,4 +1,5 @@
 #include "tanksMid.h"
+#include <string>
 
 bool t_tanksMid::processMessage(const t_message &mess)
 {
@@ -7,8 +8,9 @@ bool t_tanksMid::processMessage(const t_message &mess)
    case t_message::string:
    {
       printf("Mid has recieved a string\n");
-      const char *text = static_cast<const char *>(mess.data);
-      printf("%s\n",text);
+      std::string *text = static_cast<std::string *>(mess.data);
+      printf("%s\n",text->c_str());
+      delete text;
       break;
    }
 

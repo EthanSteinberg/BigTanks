@@ -1,4 +1,5 @@
 #include "tanksGui.h"
+#include <string>
 
 #include "shared.h"
 
@@ -48,6 +49,6 @@ bool t_tanksGui::onIO(Glib::IOCondition cond)
 
 void t_tanksGui::onButton()
 {
-   t_message text(t_message::string,"And I can talk back too...");
+   t_message text(t_message::string,new std::string("And I can talk back too..."));
    sharedData.midQueue.push(text);
 }

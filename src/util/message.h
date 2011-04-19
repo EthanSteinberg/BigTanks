@@ -14,9 +14,9 @@ public:
    };
 
    type id;
-   const void *data;
+   void *data;
 
-   t_message(type ident = none, const void * dat = NULL);
+   t_message(type ident = none, void * dat = NULL);
 
 private:
 
