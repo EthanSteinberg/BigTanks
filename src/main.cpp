@@ -38,7 +38,6 @@ void *startMid(void *ptr)
 
 int main(int argv, char **argc)
 {
-
    try
    {
       Gtk::Main main(argv,argc);

@@ -4,6 +4,8 @@
 #include <boost/utility.hpp>
 #include <boost/function.hpp>
 
+#include <pthread.h>
+
 class t_myPool : boost::noncopyable
 {
 public:
@@ -11,17 +13,17 @@ public:
    ~t_myPool();
    void addTask(const boost::function<void(void)> &func);
 
-   struct data
+   struct threadData
    {
       int fd;
-      bool *ready;
-      pthread_t thread;
+      pthread_mutex_t *mutex;
    };
 
    
 private:
-   std::vector<data> threads;
-   int pos;
+   pthread_mutex_t mutex;
+   std::vector<pthread_t> threads;
+   int fds[2];
 
 };
 
