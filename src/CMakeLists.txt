@@ -11,6 +11,9 @@ target_link_libraries(BigTanks util ${GTK2_LIBRARIES} TanksGui TanksMid TanksMod
 add_subdirectory(util)
 include_directories(util)
 
+add_subdirectory(glutil)
+include_directories(glutil)
+
 add_subdirectory(gui)
 add_subdirectory(model)
 add_subdirectory(mid)

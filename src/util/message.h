@@ -10,7 +10,8 @@ public:
    {
       none = 0,
       closed,
-      string
+      string,
+      gameOpened
    };
 
    type id;

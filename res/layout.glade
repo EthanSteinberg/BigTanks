@@ -86,4 +86,11 @@
   <object class="GtkTextBuffer" id="textbuffer1">
     <property name="text" translatable="yes">put your boots on</property>
   </object>
+  <object class="GtkWindow" id="DrawingWindow">
+    <child>
+      <object class="GtkDrawingArea" id="DrawingArea">
+        <property name="visible">True</property>
+      </object>
+    </child>
+  </object>
 </interface>

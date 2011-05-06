@@ -21,6 +21,13 @@ bool t_tanksMid::processMessage(const t_message &mess)
    }
    break;
 
+   case t_message::gameOpened:
+   {
+      printf("The game has been opened\n");
+      sharedData.guiQueue.push(mess);
+      break;
+   }
+
    default:
       printf("The mid does not know what it recieved\n");
    }

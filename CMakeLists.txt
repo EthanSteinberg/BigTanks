@@ -29,4 +29,10 @@ include_directories(${SFML_INCLUDE_DIR})
 find_package(GTK2 REQUIRED gtk gtkmm) 
 include_directories(${GTK2_INCLUDE_DIRS} /usr/include/freetype2)
 
+find_package(PNG REQUIRED)
+include_directories(${PNG_INCLUDE_DIR})
+
+find_package(GLEW REQUIRED)
+include_directories(${GLEW_INCLUDE_PATH})
+
 add_subdirectory(src)
