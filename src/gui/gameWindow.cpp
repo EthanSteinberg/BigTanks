@@ -20,105 +20,103 @@ t_gameWindow::t_gameWindow(Gtk::DrawingArea *theArea) : drawingArea(theArea)
 void t_gameWindow::start()
 {
 
-      App.Create(GDK_WINDOW_XID(drawingArea->get_window()->gobj()));
-      App.SetFramerateLimit(60);
-      initializeGL();
+   App.Create(GDK_WINDOW_XID(drawingArea->get_window()->gobj()));
+   App.SetFramerateLimit(60);
+   initializeGL();
 }
 
 
-bool t_gameWindow::onExpose(GdkEventExpose* event)
+bool t_gameWindow::onExpose(GdkEventExpose *event)
 {
    frames++;
-      //if (frames % 100 == 0)
+   //if (frames % 100 == 0)
+   {
+      printf("\rThe time is %f",1.0/((getNano() -  theTime) / 1.0e9));
+      theTime = getNano();
+      //printf("Wow really\n");
+   }
+
+   sf::Event Event;
+
+   while (App.GetEvent(Event))
+   {
+      switch (Event.Type)
       {
-         printf("\rThe time is %f",1.0/((getNano() -  theTime) / 1.0e9));
-         theTime = getNano();
-         //printf("Wow really\n");
+      case sf::Event::Resized:
+      {
+         glViewport(0,0,Event.Size.Width, Event.Size.Height);
+         break;
       }
 
-      sf::Event Event;
+      case sf::Event::Closed:
+         exit(0);
+         break;
 
-      while (App.GetEvent(Event))
-      {
-         switch (Event.Type)
-         {
-         case
-               sf::Event::Resized:
-            {
-               glViewport(0,0,Event.Size.Width, Event.Size.Height);
-            }
-            break;
-
-         case sf::Event::Closed:
-            exit(0);
-            break;
-
-         default:
-            ;
-            break;
-         }
+      default:
+         ;
+         break;
       }
+   }
 
-      glClear(GL_COLOR_BUFFER_BIT);
+   glClear(GL_COLOR_BUFFER_BIT);
 
 
-      vertexes = {};
+   vertexes = {};
 
-      int i = 0;
-      //rotation++;
+   int i = 0;
+   rotation++;
 
-      vertexes[i].textcord[0] = 1076/2048.0;
-      vertexes[i].textcord[1] = (1946 + 61) / 2048.0;
-      vertexes[i].translation[0] = 70;
-      vertexes[i].translation[1] = 70;
-      vertexes[i].translation[2] = 0;
-      vertexes[i].position[0] = -10;
-      vertexes[i].position[1] = -10;
-      vertexes[i].position[2] = 0;
-      vertexes[i++].rotation = rotation;
+   vertexes[i].textcord[0] = 1076/2048.0;
+   vertexes[i].textcord[1] = (1946 + 61) / 2048.0;
+   vertexes[i].translation[0] = 70;
+   vertexes[i].translation[1] = 70;
+   vertexes[i].translation[2] = 0;
+   vertexes[i].position[0] = -10;
+   vertexes[i].position[1] = -10;
+   vertexes[i].position[2] = 0;
+   vertexes[i++].rotation = rotation;
 
-      vertexes[i].textcord[0] = 1076/2048.0;
-      vertexes[i].textcord[1] = (1946) / 2048.0;
-      vertexes[i].translation[0] = 70;
-      vertexes[i].translation[1] = 70;
-      vertexes[i].translation[2] = 0;
-      vertexes[i].position[0] = -10;
-      vertexes[i].position[1] = 10;
-      vertexes[i].position[2] = 0;
-      vertexes[i++].rotation = rotation;
+   vertexes[i].textcord[0] = 1076/2048.0;
+   vertexes[i].textcord[1] = (1946) / 2048.0;
+   vertexes[i].translation[0] = 70;
+   vertexes[i].translation[1] = 70;
+   vertexes[i].translation[2] = 0;
+   vertexes[i].position[0] = -10;
+   vertexes[i].position[1] = 10;
+   vertexes[i].position[2] = 0;
+   vertexes[i++].rotation = rotation;
 
-      vertexes[i].textcord[0] = (1076 + 86)/2048.0;
-      vertexes[i].textcord[1] = (1946 + 61) / 2048.0;
-      vertexes[i].translation[0] = 70;
-      vertexes[i].translation[1] = 70;
-      vertexes[i].translation[2] = 0;
-      vertexes[i].position[0] = 20;
-      vertexes[i].position[1] = -10;
-      vertexes[i].position[2] = 0;
-      vertexes[i++].rotation = rotation;
+   vertexes[i].textcord[0] = (1076 + 86)/2048.0;
+   vertexes[i].textcord[1] = (1946 + 61) / 2048.0;
+   vertexes[i].translation[0] = 70;
+   vertexes[i].translation[1] = 70;
+   vertexes[i].translation[2] = 0;
+   vertexes[i].position[0] = 20;
+   vertexes[i].position[1] = -10;
+   vertexes[i].position[2] = 0;
+   vertexes[i++].rotation = rotation;
 
-      vertexes[i].textcord[0] = (1076 + 86)/2048.0;
-      vertexes[i].textcord[1] = (1946) / 2048.0;
-      vertexes[i].translation[0] = 70;
-      vertexes[i].translation[1] = 70;
-      vertexes[i].translation[2] = 0;
-      vertexes[i].position[0] = 20;
-      vertexes[i].position[1] = 10;
-      vertexes[i].position[2] = 0;
-      vertexes[i++].rotation = rotation;
+   vertexes[i].textcord[0] = (1076 + 86)/2048.0;
+   vertexes[i].textcord[1] = (1946) / 2048.0;
+   vertexes[i].translation[0] = 70;
+   vertexes[i].translation[1] = 70;
+   vertexes[i].translation[2] = 0;
+   vertexes[i].position[0] = 20;
+   vertexes[i].position[1] = 10;
+   vertexes[i].position[2] = 0;
+   vertexes[i++].rotation = rotation;
 
-      glBufferSubData(GL_ARRAY_BUFFER,0, 40 * sizeof(inputData),vertexes);
-      checkGLError();
+   glBufferSubData(GL_ARRAY_BUFFER,0, 40 * sizeof(inputData),vertexes);
+   checkGLError();
 
-      glPointSize(20);
-      glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_SHORT,0);
-      //drawText(); //Text is still not ready yet
+   glPointSize(20);
+   glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_SHORT,0);
 
-      checkGLError();
+   checkGLError();
 
-      App.Display();
+   App.Display();
 
-      drawingArea->queue_draw();
+   drawingArea->queue_draw();
    return true;
 }
 
@@ -136,7 +134,6 @@ void t_gameWindow::initializeGL()
    GLuint vertShader = createShader("../res/vert", GL_VERTEX_SHADER);
    GLuint fragShader = createShader("../res/frag", GL_FRAGMENT_SHADER);
    GLuint program = createProgram(vertShader,fragShader);
-
 
    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
    glEnable(GL_BLEND);
@@ -173,7 +170,6 @@ void t_gameWindow::initializeGL()
          indexes[l] = b -2;
       }
 
-      //printf("The number at %d at %d in %d\n",l,b,indexes[l]);
    }
 
 
@@ -228,7 +224,6 @@ void t_gameWindow::initializeGL()
    glUniformMatrix4fv(perspectivePosition,1,false,matrix);
    checkGLError();
 
-
    int texturePosition = glGetUniformLocation(program,"in_Texture");
    checkGLError();
    glUniform1i(texturePosition,0);
@@ -243,8 +238,5 @@ void t_gameWindow::initializeGL()
    // Enable Z-buffer read and write
    //glEnable(GL_DEPTH_TEST);
    //glDepthMask(GL_TRUE);
-
-
-   loadText();
 }
 
