@@ -1,13 +1,11 @@
 set(HDRS 
    matrix.h
    glStuff.h
-   text.h
       )
  
 set(SRCS
    matrix.cpp
    glStuff.cpp
-   text.cpp
    myVector2.cpp
    algoMaxRects.cpp
    myBox.cpp

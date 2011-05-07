@@ -43,7 +43,10 @@ private:
 
    int frames;
    unsigned int textures[1];
-   unsigned int buffers[2];
+
+   unsigned int vertexBuffer;
+   unsigned int indexBuffer;
+
    unsigned short indexes[60];
    long theTime;
    double rotation;

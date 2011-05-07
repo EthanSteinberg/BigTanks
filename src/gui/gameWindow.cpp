@@ -149,10 +149,13 @@ void t_gameWindow::initializeGL()
 
    loadTexture(GL_TEXTURE_2D,"../res/Wow.png");
 
-   glGenBuffers(2,buffers);
+   glGenBuffers(1,&indexBuffer);
    checkGLError();
 
-   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,buffers[1]);
+   glGenBuffers(1,&vertexBuffer);
+   checkGLError();
+
+   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indexBuffer);
    checkGLError();
 
 
@@ -177,7 +180,7 @@ void t_gameWindow::initializeGL()
    checkGLError();
 
 
-   glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
+   glBindBuffer(GL_ARRAY_BUFFER,vertexBuffer);
    checkGLError();
 
    glBufferData(GL_ARRAY_BUFFER,40 * sizeof(inputData),NULL,GL_STREAM_DRAW);
